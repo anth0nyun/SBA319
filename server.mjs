@@ -6,6 +6,9 @@ import { errorHandler } from "./middleware/errorHandler.mjs";
 import usersRouter from "./routes/users.mjs";
 import projectsRouter from "./routes/projects.mjs";
 import tasksRouter from "./routes/tasks.mjs";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = 3000;
