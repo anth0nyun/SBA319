@@ -78,3 +78,19 @@ Base URL: `http://localhost:3000`
 | PUT   | /tasks/:id  | Replace a task      |
 | PATCH | /tasks/:id  | Update part of task |
 | DELETE| /tasks/:id  | Delete a task       |
+
+
+## MongoDB Details
+- Collections: users, projects, tasks
+- Validation (collection-level JSON Schema):
+  - users: name required; username/email strings
+  - projects: name required (unique index)
+  - tasks: title (string), completed (bool), priority (enum: low|med|high), projectId/assignedTo (ObjectId or null), dueDate (date|null)
+- Indexes:
+  - users: username (unique), email (unique)
+  - projects: name (unique)
+  - tasks: projectId, assignedTo, (completed, priority) compound
+- Efficient queries (hit indexes):
+  - `/tasks?projectId=<id>`
+  - `/tasks?assignedTo=<id>`
+  - `/tasks?completed=true&priority=high`
