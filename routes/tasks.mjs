@@ -41,6 +41,23 @@ router.post("/", (req, res) => {
     res.status(201).json(task);
 });
 
+// PUT update task 
+router.put("/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const index = tasks.findIndex(t => t.id == id);
+
+    if (index == -1) {
+        return res.status(404).json({ error: "Task not found" });
+    }
+
+    const { title, completed, priority, projectId, assignedTo } = req.body;
+
+    // overwrite existing task
+    tasks[index] = { id, title, completed, priority, projectId, assignedTo };
+
+    res.json(tasks[index]);
+});
+
 
 
 export default router;
