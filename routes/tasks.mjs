@@ -58,6 +58,17 @@ router.put("/:id", (req, res) => {
     res.json(tasks[index]);
 });
 
+// DELETE task
+router.delete("/:id", (req, res) => {
+    const id = Number(req.params.id);
+    const index = tasks.findIndex(t => t.id == id);
 
+    if (index == -1) {
+        return res.status(404).json({ error: "Task not found" });
+    }
+
+    const deleted = tasks.splice(index, 1);
+    res.json(deleted[0]);
+});
 
 export default router;
