@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 // GET one task by id
 router.get("/:id", (req, res) => {
     const id = Number(req.params.id);
-    const task = tasks.find(t => t.id === id);
+    const task = tasks.find(t => t.id == id);
 
     if (!task) {
         return res.status(404).json({ error: "Task not found" });
@@ -19,5 +19,28 @@ router.get("/:id", (req, res) => {
 
     res.json(task);
 });
+
+// POST new task
+router.post("/", (req, res) => {
+    const { title, completed = false, priority = "low", projectId, assignedTo } = req.body;
+
+    if (!title) {
+        return res.status(400).json({ error: "Title is required" });
+    }
+
+    const task = {
+        id: nextIds.task++,
+        title,
+        completed,
+        priority,
+        projectId,
+        assignedTo
+    };
+
+    tasks.push(task);
+    res.status(201).json(task);
+});
+
+
 
 export default router;
